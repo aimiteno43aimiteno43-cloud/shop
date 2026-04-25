@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>つまみ細工 商品ページ</title>
+
+<style>
+body {
+font-family: "Yu Mincho", serif;
+background: #f7f3ed;
+color: #222;
+text-align: center;
+margin: 0;
+padding: 20px;
+}
+
+h1 {
+margin-top: 20px;
+}
+
+/* 商品一覧 */
+.container {
+display: grid;
+grid-template-columns: repeat(3, 250px);
+gap: 40px;
+justify-content: center;
+margin-top: 30px;
+}
+
+/* スマホ */
+@media (max-width: 768px) {
+.container {
+grid-template-columns: repeat(2, 220px);
+gap: 20px;
+}
+
+#cartArea {
+width: 95%;
+}
+}
+
+/* 商品カード */
+.product {
+background: white;
+padding: 20px;
+border-radius: 12px;
+box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.product img {
+width: 100%;
+border-radius: 10px;
+}
+
+.price {
+color: #5a0b15;
+font-weight: bold;
+font-size: 18px;
+}
+
+/* ボタン */
+button {
+padding: 10px;
+background: #726868;
+color: white;
+border: none;
+cursor: pointer;
+border-radius: 5px;
+}
+
+button:hover {
+opacity: 0.85;
+}
+
+/* 商品追加ボタン */
+.product button {
+width: 100%;
+margin-top: 10px;
+}
+
+/* カート */
+#cartArea {
+background: white;
+max-width: 700px;
+margin: 20px auto;
+padding: 20px;
+border-radius: 12px;
+}
+
+/* カート1行 */
+.cart-item {
+display: flex;
+align-items: center;
+gap: 15px;
+padding: 15px 0;
+border-bottom: 1px solid #ddd;
+}
+
+.cart-item img {
+width: 80px;
+border-radius: 10px;
+}
+
+.cart-info {
+flex: 1;
+text-align: left;
+}
+
+.qty {
+display: flex;
+align-items: center;
+gap: 8px;
+margin-top: 8px;
+}
+
+.qty button {
+width: 32px;
+height: 32px;
+padding: 0;
+}
+
+.total-box {
+margin-top: 20px;
+text-align: right;
+font-size: 18px;
+font-weight: bold;
+}
+
+.reset-btn {
+margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<p>
+つまみ細工の髪飾りです。<br>
+七五三や成人式にどうぞ。
+</p>
+
+<h1>商品一覧</h1>
+
+<div class="container">
+
+<div class="product">
+<img src="img1.jpg">
+<p class="price">¥2,980</p>
+<p>ヘアコーム 赤×桃</p>
+<button type="button" onclick="addToCart('ヘアコーム 赤×桃')">カートに追加</button>
+</div>
+
+<div class="product">
+<img src="img2.jpg">
+<p class="price">¥2,980</p>
+<p>ヘアコーム 桃×白</p>
+<button type="button" onclick="addToCart('ヘアコーム 桃×白')">カートに追加</button>
+</div>
+
+<div class="product">
+<img src="img3.jpg">
+<p class="price">¥2,980</p>
+<p>ヘアコーム 紺×白</p>
+<button type="button" onclick="addToCart('ヘアコーム 紺×白')">カートに追加</button>
+</div>
+
+<div class="product">
+<img src="img4.jpg">
+<p class="price">¥1,980</p>
+<p>ヘアクリップ 桃×白</p>
+<button type="button" onclick="addToCart('ヘアクリップ 桃×白')">カートに追加</button>
+</div>
+
+<div class="product">
+<img src="img5.jpg">
+<p class="price">¥1,980</p>
+<p>ヘアクリップ 桃×紫</p>
+<button type="button" onclick="addToCart('ヘアクリップ 桃×紫')">カートに追加</button>
+</div>
+
+<div class="product">
+<img src="img6.jpg">
+<p class="price">¥1,980</p>
+<p>ヘアクリップ 紫×白</p>
+<button type="button" onclick="addToCart('ヘアクリップ 紫×白')">カートに追加</button>
+</div>
+
+</div>
+
+<h2>カート：<span id="cartCount">0</span>個</h2>
+
+<div id="cartArea"></div>
+
+<button class="reset-btn" type="button" onclick="resetCart()">カートを空にする</button>
+
+<p>
+布地は正絹です。水気や変形に弱いため、お取り扱いには十分ご注意ください。<br>
+趣味のハンドメイド作品になります。歪みなどにご理解いただける方のみご購入をお願いいたします。
+</p>
+
+<script>
+const prices = {
+"ヘアコーム 赤×桃": 2980,
+"ヘアコーム 桃×白": 2980,
+"ヘアコーム 紺×白": 2980,
+"ヘアクリップ 桃×白": 1980,
+"ヘアクリップ 桃×紫": 1980,
+"ヘアクリップ 紫×白": 1980
+};
+
+const images = {
+"ヘアコーム 赤×桃": "img1.jpg",
+"ヘアコーム 桃×白": "img2.jpg",
+"ヘアコーム 紺×白": "img3.jpg",
+"ヘアクリップ 桃×白": "img4.jpg",
+"ヘアクリップ 桃×紫": "img5.jpg",
+"ヘアクリップ 紫×白": "img6.jpg"
+};
+
+let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+showCart();
+
+function addToCart(name) {
+cart[name] = (cart[name] || 0) + 1;
+saveCart();
+}
+
+function plusItem(name) {
+cart[name]++;
+saveCart();
+}
+
+function minusItem(name) {
+cart[name]--;
+
+if (cart[name] <= 0) {
+delete cart[name];
+}
+
+saveCart();
+}
+
+function resetCart() {
+cart = {};
+localStorage.removeItem("cart");
+showCart();
+}
+
+function saveCart() {
+localStorage.setItem("cart", JSON.stringify(cart));
+showCart();
+}
+
+function showCart() {
+let text = "";
+let totalCount = 0;
+let totalPrice = 0;
+
+for (let item in cart) {
+let count = cart[item];
+let price = prices[item];
+let subtotal = count * price;
+
+text += `
+<div class="cart-item">
+<img src="${images[item]}">
+
+<div class="cart-info">
+${item}<br>
+¥${price.toLocaleString()}
+
+<div class="qty">
+<button type="button" onclick="minusItem('${item}')">−</button>
+${count}
+<button type="button" onclick="plusItem('${item}')">＋</button>
+</div>
+
+小計 ¥${subtotal.toLocaleString()}
+</div>
+</div>
+`;
+
+totalCount += count;
+totalPrice += subtotal;
+}
+
+text += `
+<div class="total-box">
+合計個数：${totalCount}個<br>
+合計金額：¥${totalPrice.toLocaleString()}
+</div>
+`;
+
+document.getElementById("cartArea").innerHTML = text;
+document.getElementById("cartCount").textContent = totalCount;
+}
+</script>
+
+</body>
+</html>
